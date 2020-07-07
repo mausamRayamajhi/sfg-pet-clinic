@@ -140,3 +140,9 @@ Desktop.ini
 ######################
 .eslintcache
 /HELP.md
+######################
+# CUSTOME IGNORE 
+######################
+/pet-clinic-web/target/
+/pet-clinic-data/target/
+/pet-clinic-web/src/test/
