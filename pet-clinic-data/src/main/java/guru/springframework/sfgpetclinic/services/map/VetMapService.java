@@ -1,35 +1,45 @@
 package guru.springframework.sfgpetclinic.services.map;
 
-import guru.springframework.sfgpetclinic.model.Owner;
-import guru.springframework.sfgpetclinic.model.Visit;
-import guru.springframework.sfgpetclinic.services.OwnerService;
-import guru.springframework.sfgpetclinic.services.VisitService;
+import guru.springframework.sfgpetclinic.model.Speciality;
+import guru.springframework.sfgpetclinic.model.Vet;
+import guru.springframework.sfgpetclinic.services.SpecialityService;
+import guru.springframework.sfgpetclinic.services.VetService;
+import org.springframework.stereotype.Service;
 
 import java.util.Set;
+@Service
+public class VetMapService extends AbstractMapService<Vet, Long> implements VetService {
+  private final SpecialityService specialityService;
 
-public class VetMapService extends AbstractMapService<Visit, Long> implements VisitService {
-
+    public VetMapService(SpecialityService specialityService) {
+        this.specialityService = specialityService;
+    }
 
     @Override
-    public Set<Visit> findAll() {
+    public Set<Vet> findAll() {
         return super.findAll();
     }
 
     @Override
-    public Visit findById(Long id) {
+    public Vet findById(Long id) {
         return super.findById(id);
     }
 
     @Override
-    public Visit save(Visit visit) {
-        if (visit.getPet() == null || visit.getPet().getOwner() == null ||
-                visit.getPet().getId() == null || visit.getPet().getOwner().getId() == null)
-            throw new RuntimeException("Invalid Visit");
-        return super.save(visit);
+    public Vet save(Vet object) {
+        if (object.getSpecialities().size()>0){
+            object.getSpecialities().forEach(speciality -> {
+                if(speciality.getId() == null){
+                    Speciality savedSpeciality = specialityService.save(speciality);
+                    speciality.setId(savedSpeciality.getId());
+                }
+            });
+        }
+        return super.save( object);
     }
 
     @Override
-    public void delete(Visit object) {
+    public void delete(Vet object) {
         super.delete(object);
     }
 
