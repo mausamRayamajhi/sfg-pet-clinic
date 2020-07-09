@@ -15,7 +15,6 @@ public class DataLoader implements CommandLineRunner {
 
     public DataLoader(OwnerService ownerService, VetService vetService){
         this.ownerService = ownerService;
-
         this.vetService = vetService;
     }
     @Override
@@ -32,7 +31,7 @@ public class DataLoader implements CommandLineRunner {
         Owner owner2 = new Owner();
 
         owner2.setFirstName("Rabin");
-        owner2.setLastName("Khatri");
+        owner2.setLastName("Poudel");
 
         ownerService.save(owner2);
 
